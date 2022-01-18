@@ -1,5 +1,12 @@
 <template>
-  <div>jokez</div>
+  <div>
+    <Joke
+      v-for="joke in jokes"
+      :key="joke.id"
+      :id="joke.id"
+      :joke="joke.joke"
+    />
+  </div>
 </template>
 
 <script>
