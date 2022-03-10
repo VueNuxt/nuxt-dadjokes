@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { getJokeById } from "../../../utils/getJokes";
 
 export default {
   data() {
@@ -17,22 +17,7 @@ export default {
     };
   },
   async created() {
-    const config = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-
-    try {
-      const res = await axios.get(
-        `https://icanhazdadjoke.com/j/${this.$route.params.id}`,
-        config
-      );
-      this.joke = res.data.joke;
-    } catch (error) {
-      console.error(error);
-    }
+    this.joke = await getJokeById($route.params.id);
   },
 };
 </script>

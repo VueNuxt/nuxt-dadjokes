@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import Joke from "../../components/Joke";
 import SearchJokes from "../../components/SearchJokes";
+import { getJokes, searchJoke } from "../../utils/getJokes";
 
 export default {
   components: {
@@ -26,38 +26,11 @@ export default {
     };
   },
   async created() {
-    const config = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-
-    try {
-      const res = await axios.get("https://icanhazdadjoke.com/search", config);
-      this.jokes = res.data.results;
-    } catch (error) {
-      console.error(error);
-    }
+    this.jokes = await getJokes();
   },
   methods: {
     async searchText(text) {
-      const config = {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      };
-
-      try {
-        const res = await axios.get(
-          `https://icanhazdadjoke.com/search?term=${text}`,
-          config
-        );
-        this.jokes = res.data.results;
-      } catch (error) {
-        console.error(error);
-      }
+      this.jokes = await searchJoke(text);
     },
   },
   head() {
